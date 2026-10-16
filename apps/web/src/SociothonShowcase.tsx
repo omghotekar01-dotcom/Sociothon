@@ -1,3 +1,4 @@
+import {rankCasesForReview} from './impactReview';
 import {useMemo,useState} from 'react';
 import {ArrowRight,Download,ShieldCheck} from 'lucide-react';
 import type {Bootstrap,CivicCase} from './api';
@@ -24,6 +25,7 @@ export function SociothonShowcase({data,go}:{data:Bootstrap;go:(p:string)=>void}
   const [filter,setFilter]=useState('all');
   const cases=Array.isArray(data.cases)?data.cases:[];
   const focus=useMemo(()=>filter==='all'?cases:cases.filter(c=>c.domain===filter),[cases,filter]);
+  const reviewQueue=useMemo(()=>rankCasesForReview(focus).slice(0,6),[focus]);
   const open=focus.filter(c=>!done(c)).length;
   const reviewed=focus.filter(done).length;
   const zones=new Set(focus.map(c=>c.zone_id)).size;
@@ -64,6 +66,22 @@ export function SociothonShowcase({data,go}:{data:Bootstrap;go:(p:string)=>void}
         {distribution.map(a=><div className="si-case" key={a.id}><div><strong>{a.name}</strong><small>{a.goal}</small></div><strong>{a.count}</strong></div>)}
       </section>
     </div>
+    <section className="si-card si-review-section">
+      <div className="si-review-head">
+        <div><div className="si-kicker">Transparent decision support · human reviewed</div>
+          <h3 className="si-section-title">Cases needing an administrative look</h3>
+          <p>Suggestions consider existing severity flags, administrative review targets, case age and reviewer assignment. They do not predict danger or certify field conditions.</p>
+        </div>
+        <button type="button" className="button secondary" onClick={()=>go('/incidents')}>Open case workspace <ArrowRight size={14}/></button>
+      </div>
+      {reviewQueue.length===0?<p>No open cases in this selected service domain.</p>:
+        <div className="si-review-list">{reviewQueue.map(item=><div key={item.case.id} className="si-review-item">
+          <div className="si-review-case"><strong>{item.case.title}</strong><small>{item.case.id} · {item.case.zone_id} · {item.case.domain}</small></div>
+          <span className={'si-review-band '+(item.band==='High priority review'?'urgent':item.band==='Review next'?'next':'routine')}>{item.band}</span>
+          <div className="si-review-reasons">{item.reasons.slice(0,3).join(' · ')}</div>
+        </div>)}</div>}
+      <p className="si-caption">Transparent demonstration heuristic; existing administrative flags are inputs, not independently verified facts. Reviewers decide the response. This queue does not dispatch services or automatically close cases.</p>
+    </section>
     <div className="si-card" style={{marginTop:16}}>
       <h3 className="si-section-title">Recent cases in this view</h3>
       {focus.length===0?<p>No cases in the selected domain and authorized scope.</p>:focus.slice(0,5).map(c=><div className="si-case" key={c.id}>

@@ -156,3 +156,24 @@
 :root[data-theme="dark"] .si-note{background:#17362f;border-color:#2d6154;color:#b6dbc9}
 @media(max-width:920px){.si-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.si-layout{grid-template-columns:1fr}}
 @media(max-width:620px){.si-hero{padding:18px;display:block}.si-hero h2{font-size:22px}.si-hero-actions{margin-top:16px;justify-content:flex-start}.si-steps{grid-template-columns:1fr 1fr}.si-grid{grid-template-columns:1fr 1fr}.si-card{padding:13px}}
+
+/* Sociothon evidence-review queue — uses inherited light/dark tokens. */
+.si-review-section{margin-top:16px}
+.si-review-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.si-review-head h3{margin:6px 0 7px}
+.si-review-head p{font-size:11px;max-width:740px}
+.si-review-list{margin-top:14px;border-top:1px solid var(--line)}
+.si-review-item{display:grid;grid-template-columns:minmax(180px,1fr) auto minmax(230px,1.2fr);align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.si-review-case{min-width:0}
+.si-review-case strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.si-review-case small{display:block;color:var(--muted);font-size:10px;margin-top:4px;overflow-wrap:anywhere}
+.si-review-band{font-size:10px;font-weight:700;border:1px solid var(--line);border-radius:6px;padding:6px 8px;white-space:nowrap}
+.si-review-band.urgent{background:#fff0ee;color:#a93a42;border-color:#edc5ca}
+.si-review-band.next{background:#fff5e5;color:#91602a;border-color:#ead5b3}
+.si-review-band.routine{background:#e7f6ef;color:#236c51;border-color:#bfe2ce}
+.si-review-reasons{font-size:10px;line-height:1.55;color:var(--muted)}
+:root[data-theme="dark"] .si-review-band.urgent{background:#38262c;color:#fab2b3;border-color:#774650}
+:root[data-theme="dark"] .si-review-band.next{background:#302a23;color:#e4c08a;border-color:#615039}
+:root[data-theme="dark"] .si-review-band.routine{background:#1b332d;color:#a9dcc8;border-color:#366657}
+@media(max-width:990px){.si-review-item{grid-template-columns:minmax(150px,1fr) auto}.si-review-reasons{grid-column:1/-1}.si-review-head{flex-direction:column}}
+@media(max-width:520px){.si-review-item{grid-template-columns:1fr}.si-review-reasons{grid-column:auto}.si-review-band{justify-self:start}}

@@ -17,3 +17,8 @@ Use the existing local launcher / Python FastAPI app and choose an Operator or A
 Run `pnpm --dir apps/web typecheck`, `pnpm --dir apps/web build`, `pnpm --dir apps/web lint` and `python -m pytest tests -q`. Deployment, security review, field validation, municipal integrations and permission from the original upstream authors remain separate requirements.
 
 See [SOURCE_ATTRIBUTION.md](SOURCE_ATTRIBUTION.md) and upstream [docs/limitations.md](docs/limitations.md).
+
+## Transparent administrative review queue (additional enhancement)
+The Sociothon Impact workspace now shows a deterministic, explainable review queue for **authorised visible open cases**. It uses existing case severity labels, administrative deadlines, elapsed age, reopened state and assignment gaps. Each suggestion lists its reasons; human reviewers remain responsible for field decisions, verification, and case closure. No additional sensitive case content is included in aggregate exports.
+
+To validate the ranking independently, run `node --experimental-strip-types --test scripts/impact-review.test.mjs`. This is a triage *demonstrator*, not an emergency-prediction system or evidence of actual service delivery.
