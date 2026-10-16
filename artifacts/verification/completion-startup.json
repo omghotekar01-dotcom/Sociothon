@@ -1,0 +1,70 @@
+{
+  "timestamp_utc": "2026-10-15T18:58:35.078507+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "workspace": "C:\\Users\\Nikhil Jadhav\\OneDrive\\Documents\\ChatGPT\\Civic Signal 360",
+  "data_directory": "C:\\Users\\Nikhil Jadhav\\OneDrive\\Documents\\ChatGPT\\Civic Signal 360\\.runtime\\fresh-start-6ka10zd9\\data",
+  "checks": [
+    {
+      "name": "fresh migrations and synthetic seed",
+      "status": "passed",
+      "table_counts": {
+        "asset_connections": 6,
+        "assets": 24,
+        "associations": 6,
+        "audit_events": 18,
+        "baseline_deployments": 2,
+        "baseline_versions": 2,
+        "case_inspectors": 0,
+        "cases": 18,
+        "configuration": 3,
+        "demo_sessions": 0,
+        "evidence": 0,
+        "jobs": 0,
+        "model_runs": 9,
+        "notifications": 36,
+        "readings": 8064,
+        "reports": 0,
+        "scenario_playbacks": 0,
+        "schema_migrations": 8,
+        "sessions": 0,
+        "uploads": 0,
+        "users": 5,
+        "zones": 3
+      }
+    },
+    {
+      "name": "repeat migrations and seed preserve every existing row",
+      "status": "passed"
+    },
+    {
+      "name": "documented launcher serves API and built local frontend",
+      "status": "passed",
+      "bundled_assets": 3
+    },
+    {
+      "name": "authenticated report persists once after duplicate submission",
+      "status": "passed"
+    },
+    {
+      "name": "separate durable worker processes queued scenario",
+      "status": "passed",
+      "job_id": "b9b0fa41-697d-47dc-a696-c7590deaec0d"
+    },
+    {
+      "name": "requested shutdown closes API listener",
+      "status": "passed"
+    },
+    {
+      "name": "service restart preserves session report receipt and completed job",
+      "status": "passed"
+    },
+    {
+      "name": "occupied-port startup returns failure",
+      "status": "passed",
+      "exit_code": 1
+    }
+  ],
+  "status": "passed",
+  "duration_seconds": 59.27,
+  "service_log": "C:\\Users\\Nikhil Jadhav\\OneDrive\\Documents\\ChatGPT\\Civic Signal 360\\.runtime\\fresh-start-6ka10zd9\\services.log"
+}

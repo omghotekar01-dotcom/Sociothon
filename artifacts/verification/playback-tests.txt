@@ -1,0 +1,15 @@
+✔ frames align distinct baseline and modified timestamps chronologically (1.5661ms)
+✔ frames preserve gaps without invented observations or zero fills (0.2615ms)
+✔ snapshot domains use only their recorded clock and unavailable clocks stay empty (0.1441ms)
+✔ saved playback always restores paused and clamps corrupt device state (0.4116ms)
+✔ pause ignores late ticks and seek pauses without changing source results (0.3269ms)
+✔ playback stops exactly at its final frame and restart leaves it paused (0.2019ms)
+✔ single snapshots cannot start and invalid speed values are ignored (0.1423ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1076.1057

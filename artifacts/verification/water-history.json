@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "name": "Effective schedule survives reload and current changes; historical review selects recorded periods",
+      "status": "passed"
+    },
+    {
+      "name": "Two independent meters compare exact complete windows and export original sources",
+      "status": "passed"
+    },
+    {
+      "name": "Missing meter windows stay unavailable; revoked schedule stays in history and creates an explicit gap",
+      "status": "passed"
+    },
+    {
+      "name": "History and comparison controls support Marathi and 390/768/1440 layouts",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

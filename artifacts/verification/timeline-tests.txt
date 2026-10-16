@@ -1,0 +1,16 @@
+✔ sensor events use observation intervals even when cases were created later (0.8795ms)
+✔ half-open time windows exclude touching events without double counting (0.1408ms)
+✔ point reports include the start and exclude the end (0.1224ms)
+✔ bad dates remain unavailable and all-time view can still include undated cases (0.1979ms)
+✔ interval duration and explicit timezone offsets are honored (0.1482ms)
+✔ zone and domain filters preserve missing rows and never relabel water as electricity (0.7587ms)
+✔ shareable selection validates spans and relative presets anchor to recorded time (0.3143ms)
+✔ timeline bounds include complete final intervals and one-point data (0.1614ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1097.4793

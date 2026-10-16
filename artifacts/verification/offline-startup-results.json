@@ -1,0 +1,16 @@
+{
+  "checks": [
+    {
+      "name": "Fresh direct route opens the cached shell after the local server stops",
+      "status": "passed"
+    },
+    {
+      "name": "Saved draft restores for editing while report submission stays disabled",
+      "status": "passed"
+    }
+  ],
+  "page_errors": [],
+  "started_at": "2026-10-14T20:39:20.604Z",
+  "failed_api_requests": 1,
+  "finished_at": "2026-10-14T20:39:21.511Z"
+}

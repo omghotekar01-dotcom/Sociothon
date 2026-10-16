@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "name": "Marathi offline draft restores text and omits location until explicitly retained",
+      "status": "passed"
+    },
+    {
+      "name": "Lost report confirmation recovers the original receipt after reload without location or another POST",
+      "status": "passed"
+    },
+    {
+      "name": "Failure before commit restores pending report and accepts the complete re-entered location",
+      "status": "passed"
+    },
+    {
+      "name": "Location opt-in restores full draft and malformed drafts show a recoverable error",
+      "status": "passed"
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "started_at": "2026-10-15T18:49:41.733Z",
+  "finished_at": "2026-10-15T18:49:47.387Z"
+}

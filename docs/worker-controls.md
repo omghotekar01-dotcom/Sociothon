@@ -1,0 +1,15 @@
+# Scenario worker pause and resume
+
+Scenario Studio has two distinct controls: **Worker controls** manage execution before results are published; **Recorded playback** explores the finished result. The worker controls support scenario jobs in local demo mode. Regular analysis and baseline-candidate jobs are not pausable through this API.
+
+Select **Create this run paused** to save parameters without allowing a worker to claim the run. Paused state survives page reload, API restart and worker restart. Enter a reason and choose **Resume worker run** to place it back in the queue. A queued job can also be paused before claim, without consuming an attempt.
+
+A running job changes to **pausing** when a request is accepted. The current numerical calculation continues until the publication checkpoint. The worker saves its calculated output in the database and changes to **paused**, without creating scenario cases. Resume claims the job with a fresh worker token, reuses the saved calculation, and atomically publishes its cases and final result. The control does not suspend a Python process or interrupt an individual model-fit instruction. If publication committed before the pause request, the request reports a state conflict and the UI refreshes through polling.
+
+The owner or an administrator can control a run, subject to current department/all-zone access. Session and CSRF checks apply. A reason and optimistic control revision are required; audit records retain each requested state change. Worker claims have unique tokens, so an expired claimant cannot overwrite or publish after another claim takes over. If a worker crashes while a pause is pending, lease expiry converts the job to paused; without a saved checkpoint, resume recalculates. A successful pause does not consume the retry allowance. Calculation failures retain the existing bounded retry policy and error record.
+
+Migration `0005_job_controls` adds nullable claim tokens and checkpoints plus a control revision defaulting to 1. Existing queued and finished jobs retain their status and results. Checkpoint content is private to server execution; the authorized job response exposes only checkpoint availability/stage.
+
+Tests cover queued pause/resume, ownership and role rejection, stale revisions, a pause arriving during real calculation, absence of cases before resume, checkpoint reuse without recalculation, expired pause recovery, retired-token rejection and preservation of existing jobs through migration. The browser journey creates a paused run, waits and reloads, then resumes through the real worker and verifies the persisted final result.
+
+Scenario result playback uses a separate durable clock over stored result timestamps. It does not rerun detectors or interrupt the worker calculation. New demo scenarios and their generated cases are isolated by a server-issued browser session; session reset clears eligible scenario output and cases while preserving reports, readings and evidence. Multi-worker stress testing remains separate acceptance work. See demo-sessions.md.

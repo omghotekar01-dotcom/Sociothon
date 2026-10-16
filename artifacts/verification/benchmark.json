@@ -1,0 +1,866 @@
+{
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel"
+  },
+  "dataset": {
+    "dataset_id": "civicsignal-synthetic-360-56d-v1",
+    "seed": 360,
+    "days": 56,
+    "rows": 8064,
+    "clock": "2026-10-13T00:00:00Z",
+    "interval_convention": "UTC interval start; interval quantities, not counters",
+    "checksum": "2b0e419b0ed157092bcb",
+    "model_version": "seasonal-mad-iforest-1.1",
+    "config_version": "civic-rules-1.1",
+    "provenance": "Synthetic",
+    "limitations": "Independent hackathon prototype; synthetic district meters do not represent real infrastructure"
+  },
+  "analysis_seconds": 11.9147,
+  "domains": {
+    "water": {
+      "findings": 3,
+      "coverage": 0.93056,
+      "evaluation": {
+        "status": "computed",
+        "dataset_id": "synthetic-water-37031-56d-v1",
+        "seed": 37031,
+        "development_seed": 360,
+        "validation_seed": 7301,
+        "split": {
+          "train_days": 42,
+          "validation_days": 7,
+          "heldout_days": 7,
+          "heldout_start": "2026-10-06T00:00:00Z"
+        },
+        "samples": 499,
+        "coverage": 0.99008,
+        "models": {
+          "robust_baseline": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": {
+              "tn": 482,
+              "fp": 0,
+              "fn": 0,
+              "tp": 17
+            },
+            "false_flagged_intervals_per_zone_day": 0.0
+          },
+          "isolation_forest": {
+            "precision": 0.48571,
+            "recall": 1.0,
+            "f1": 0.65385,
+            "confusion_matrix": {
+              "tn": 464,
+              "fp": 18,
+              "fn": 0,
+              "tp": 17
+            },
+            "false_flagged_intervals_per_zone_day": 0.85714
+          }
+        },
+        "event_metrics": {
+          "predicted_events": 2,
+          "ground_truth_events": 2,
+          "matched_events": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mean_detection_delay_hours": 3.0,
+          "false_alerts_per_zone_day": 0.0,
+          "matching_rule": "Same meter and overlapping interval window with ±1 hour tolerance; one-to-one greedy chronological match"
+        },
+        "model_version": "seasonal-mad-iforest-1.1",
+        "thresholds": {
+          "mad_scale": 4.5,
+          "relative_floor": 0.25,
+          "isolation_contamination": 0.02,
+          "minimum_persistence": 3
+        },
+        "limitations": [
+          "Computed on synthetic held-out data, not real-world accuracy",
+          "Fixed thresholds; no held-out tuning",
+          "Interval metrics include quality-suppressed intervals as negatives; coverage is valid-input coverage",
+          "Ground truth is generated separately and excluded from detector input",
+          "Validation seed is reserved for future model selection; thresholds are predefined"
+        ]
+      },
+      "forecast": {
+        "status": "ready",
+        "method": "Weekly seasonal naive (same hour seven days earlier)",
+        "horizon_hours": 24,
+        "points": [
+          {
+            "timestamp": "2026-10-13T00:00:00Z",
+            "expected": 137.3252,
+            "lower": 122.3783,
+            "upper": 152.2721,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T01:00:00Z",
+            "expected": 161.3928,
+            "lower": 146.4459,
+            "upper": 176.3397,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T02:00:00Z",
+            "expected": 200.9424,
+            "lower": 185.9955,
+            "upper": 215.8893,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T03:00:00Z",
+            "expected": 202.4521,
+            "lower": 187.5052,
+            "upper": 217.399,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T04:00:00Z",
+            "expected": 204.7369,
+            "lower": 189.79,
+            "upper": 219.6838,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T05:00:00Z",
+            "expected": 165.7479,
+            "lower": 150.801,
+            "upper": 180.6948,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T06:00:00Z",
+            "expected": 140.5718,
+            "lower": 125.6249,
+            "upper": 155.5187,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T07:00:00Z",
+            "expected": 108.8846,
+            "lower": 93.9377,
+            "upper": 123.8315,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T08:00:00Z",
+            "expected": 94.5345,
+            "lower": 79.5876,
+            "upper": 109.4814,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T09:00:00Z",
+            "expected": 116.9985,
+            "lower": 102.0516,
+            "upper": 131.9454,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T10:00:00Z",
+            "expected": 153.1119,
+            "lower": 138.165,
+            "upper": 168.0588,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T11:00:00Z",
+            "expected": 171.7503,
+            "lower": 156.8034,
+            "upper": 186.6972,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T12:00:00Z",
+            "expected": 208.4806,
+            "lower": 193.5337,
+            "upper": 223.4275,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T13:00:00Z",
+            "expected": 233.8787,
+            "lower": 218.9318,
+            "upper": 248.8256,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T14:00:00Z",
+            "expected": 251.7432,
+            "lower": 236.7963,
+            "upper": 266.6901,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T15:00:00Z",
+            "expected": 234.9715,
+            "lower": 220.0246,
+            "upper": 249.9184,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T16:00:00Z",
+            "expected": 207.0204,
+            "lower": 192.0735,
+            "upper": 221.9673,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T17:00:00Z",
+            "expected": 179.8446,
+            "lower": 164.8977,
+            "upper": 194.7915,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T18:00:00Z",
+            "expected": 146.8243,
+            "lower": 131.8774,
+            "upper": 161.7712,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T19:00:00Z",
+            "expected": 100.6296,
+            "lower": 85.6827,
+            "upper": 115.5765,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T20:00:00Z",
+            "expected": 97.9613,
+            "lower": 83.0144,
+            "upper": 112.9082,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T21:00:00Z",
+            "expected": 102.1398,
+            "lower": 87.1929,
+            "upper": 117.0867,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T22:00:00Z",
+            "expected": 110.2776,
+            "lower": 95.3307,
+            "upper": 125.2245,
+            "unit": "L"
+          },
+          {
+            "timestamp": "2026-10-13T23:00:00Z",
+            "expected": 111.5852,
+            "lower": 96.6383,
+            "upper": 126.5321,
+            "unit": "L"
+          }
+        ],
+        "daily": [
+          {
+            "date": "2026-10-13",
+            "start": "2026-10-13T00:00:00Z",
+            "period_hours": 24,
+            "expected": 3843.8057,
+            "lower": 3799.0552,
+            "upper": 3888.5562,
+            "unit": "L"
+          }
+        ],
+        "daily_history": [
+          {
+            "date": "2026-09-29",
+            "actual": 3832.9391,
+            "valid": 24
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3800.9961,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3840.2469,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3873.8162,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-03",
+            "actual": 4222.935,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-04",
+            "actual": 4233.3722,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3817.8391,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3843.8057,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3801.3253,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3834.7264,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3855.007,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-10",
+            "actual": 4290.6384,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-11",
+            "actual": 4181.1412,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-12",
+            "actual": 7124.1757,
+            "valid": 24
+          }
+        ],
+        "interval_method": "90th percentile absolute errors in separate preceding 7-day calibration block; empirical marginal intervals",
+        "prediction_interval_radius": 14.9469,
+        "nominal_coverage": 0.9,
+        "metrics": {
+          "mae": 26.08317,
+          "rmse": 73.39614,
+          "interval_coverage": 0.83333,
+          "test_samples": 168,
+          "calibration_samples": 168
+        },
+        "daily_metrics": {
+          "mae": 494.54236,
+          "rmse": 1250.12434,
+          "interval_coverage": 0.57143,
+          "test_days": 7,
+          "calibration_days": 7
+        },
+        "splits": {
+          "calibration_start": "2026-09-29T00:00:00Z",
+          "calibration_end_exclusive": "2026-10-06T00:00:00Z",
+          "test_start": "2026-10-06T00:00:00Z",
+          "test_end_exclusive": "2026-10-13T00:00:00Z"
+        },
+        "weekly_comparison": {
+          "previous_week_total": 27622.1446,
+          "latest_week_total": 30930.8197,
+          "coverage": 1.0
+        },
+        "enhanced_model": {
+          "status": "computed",
+          "method": "Histogram gradient boosting, fixed hyperparameters",
+          "protocol": "One-hour rolling origin; lag-24, lag-168 and trailing-24 mean use only past observations",
+          "features": [
+            "local hour",
+            "local weekday",
+            "lag 24h",
+            "lag 168h",
+            "trailing 24h mean"
+          ],
+          "fit_rows": 840,
+          "calibration_rows": 168,
+          "test_rows": 168,
+          "fit_end_exclusive": "2026-09-29T00:00:00Z",
+          "calibration_end_exclusive": "2026-10-06T00:00:00Z",
+          "metrics": {
+            "mae": 25.08225,
+            "rmse": 72.813,
+            "interval_coverage": 0.83929,
+            "baseline_mae_same_rows": 26.08317,
+            "baseline_rmse_same_rows": 73.39614
+          },
+          "interval_radius": 13.07964,
+          "interval_method": "90th percentile absolute errors from separate prior calibration block",
+          "selection": "Comparison only; deployment retains seasonal naive pending validation-led model selection"
+        },
+        "limitations": [
+          "Intervals reflect synthetic historical errors and can miss regime changes",
+          "No percentage error metric is used near zero demand",
+          "Daily forecast periods are successive 24-hour windows from the forecast origin",
+          "Daily interval calibration uses complete calibration days only",
+          "Operational forecast remains seasonal naive; enhanced backtest does not silently switch the deployed method"
+        ]
+      }
+    },
+    "electricity": {
+      "findings": 3,
+      "coverage": 0.93056,
+      "evaluation": {
+        "status": "computed",
+        "dataset_id": "synthetic-electricity-37031-56d-v1",
+        "seed": 37031,
+        "development_seed": 360,
+        "validation_seed": 7301,
+        "split": {
+          "train_days": 42,
+          "validation_days": 7,
+          "heldout_days": 7,
+          "heldout_start": "2026-10-06T00:00:00Z"
+        },
+        "samples": 499,
+        "coverage": 0.99008,
+        "models": {
+          "robust_baseline": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "confusion_matrix": {
+              "tn": 485,
+              "fp": 0,
+              "fn": 0,
+              "tp": 14
+            },
+            "false_flagged_intervals_per_zone_day": 0.0
+          },
+          "isolation_forest": {
+            "precision": 0.42424,
+            "recall": 1.0,
+            "f1": 0.59574,
+            "confusion_matrix": {
+              "tn": 466,
+              "fp": 19,
+              "fn": 0,
+              "tp": 14
+            },
+            "false_flagged_intervals_per_zone_day": 0.90476
+          }
+        },
+        "event_metrics": {
+          "predicted_events": 2,
+          "ground_truth_events": 2,
+          "matched_events": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "mean_detection_delay_hours": 3.0,
+          "false_alerts_per_zone_day": 0.0,
+          "matching_rule": "Same meter and overlapping interval window with ±1 hour tolerance; one-to-one greedy chronological match"
+        },
+        "model_version": "seasonal-mad-iforest-1.1",
+        "thresholds": {
+          "mad_scale": 4.5,
+          "relative_floor": 0.25,
+          "isolation_contamination": 0.02,
+          "minimum_persistence": 3
+        },
+        "limitations": [
+          "Computed on synthetic held-out data, not real-world accuracy",
+          "Fixed thresholds; no held-out tuning",
+          "Interval metrics include quality-suppressed intervals as negatives; coverage is valid-input coverage",
+          "Ground truth is generated separately and excluded from detector input",
+          "Validation seed is reserved for future model selection; thresholds are predefined"
+        ]
+      },
+      "forecast": {
+        "status": "ready",
+        "method": "Weekly seasonal naive (same hour seven days earlier)",
+        "horizon_hours": 24,
+        "points": [
+          {
+            "timestamp": "2026-10-13T00:00:00Z",
+            "expected": 2.7134,
+            "lower": 2.3945,
+            "upper": 3.0323,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T01:00:00Z",
+            "expected": 3.3888,
+            "lower": 3.0699,
+            "upper": 3.7077,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T02:00:00Z",
+            "expected": 4.0617,
+            "lower": 3.7428,
+            "upper": 4.3806,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T03:00:00Z",
+            "expected": 4.3619,
+            "lower": 4.043,
+            "upper": 4.6808,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T04:00:00Z",
+            "expected": 4.2032,
+            "lower": 3.8843,
+            "upper": 4.5221,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T05:00:00Z",
+            "expected": 3.4187,
+            "lower": 3.0998,
+            "upper": 3.7376,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T06:00:00Z",
+            "expected": 2.5676,
+            "lower": 2.2487,
+            "upper": 2.8865,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T07:00:00Z",
+            "expected": 2.3294,
+            "lower": 2.0105,
+            "upper": 2.6483,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T08:00:00Z",
+            "expected": 2.251,
+            "lower": 1.9321,
+            "upper": 2.5699,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T09:00:00Z",
+            "expected": 2.4828,
+            "lower": 2.1639,
+            "upper": 2.8017,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T10:00:00Z",
+            "expected": 2.7299,
+            "lower": 2.411,
+            "upper": 3.0488,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T11:00:00Z",
+            "expected": 3.388,
+            "lower": 3.0691,
+            "upper": 3.7069,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T12:00:00Z",
+            "expected": 4.5011,
+            "lower": 4.1822,
+            "upper": 4.82,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T13:00:00Z",
+            "expected": 5.1299,
+            "lower": 4.811,
+            "upper": 5.4488,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T14:00:00Z",
+            "expected": 5.2371,
+            "lower": 4.9182,
+            "upper": 5.556,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T15:00:00Z",
+            "expected": 4.8666,
+            "lower": 4.5477,
+            "upper": 5.1855,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T16:00:00Z",
+            "expected": 4.0403,
+            "lower": 3.7214,
+            "upper": 4.3592,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T17:00:00Z",
+            "expected": 3.4235,
+            "lower": 3.1046,
+            "upper": 3.7424,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T18:00:00Z",
+            "expected": 2.7544,
+            "lower": 2.4355,
+            "upper": 3.0733,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T19:00:00Z",
+            "expected": 2.1851,
+            "lower": 1.8662,
+            "upper": 2.504,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T20:00:00Z",
+            "expected": 2.1195,
+            "lower": 1.8006,
+            "upper": 2.4384,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T21:00:00Z",
+            "expected": 1.9405,
+            "lower": 1.6216,
+            "upper": 2.2594,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T22:00:00Z",
+            "expected": 2.0407,
+            "lower": 1.7218,
+            "upper": 2.3596,
+            "unit": "kWh"
+          },
+          {
+            "timestamp": "2026-10-13T23:00:00Z",
+            "expected": 2.1263,
+            "lower": 1.8074,
+            "upper": 2.4452,
+            "unit": "kWh"
+          }
+        ],
+        "daily": [
+          {
+            "date": "2026-10-13",
+            "start": "2026-10-13T00:00:00Z",
+            "period_hours": 24,
+            "expected": 78.2614,
+            "lower": 76.7674,
+            "upper": 79.7554,
+            "unit": "kWh"
+          }
+        ],
+        "daily_history": [
+          {
+            "date": "2026-09-29",
+            "actual": 78.9216,
+            "valid": 24
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 78.5066,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 78.7145,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 78.8675,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-03",
+            "actual": 87.5848,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-04",
+            "actual": 86.742,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 79.1309,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 78.2614,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 79.3214,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 79.9548,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 81.5284,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-10",
+            "actual": 88.4064,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-11",
+            "actual": 93.737,
+            "valid": 24
+          },
+          {
+            "date": "2026-10-12",
+            "actual": 109.6093,
+            "valid": 24
+          }
+        ],
+        "interval_method": "90th percentile absolute errors in separate preceding 7-day calibration block; empirical marginal intervals",
+        "prediction_interval_radius": 0.3189,
+        "nominal_coverage": 0.9,
+        "metrics": {
+          "mae": 0.38366,
+          "rmse": 0.90216,
+          "interval_coverage": 0.80357,
+          "test_samples": 168,
+          "calibration_samples": 168
+        },
+        "daily_metrics": {
+          "mae": 6.23874,
+          "rmse": 11.8819,
+          "interval_coverage": 0.57143,
+          "test_days": 7,
+          "calibration_days": 7
+        },
+        "splits": {
+          "calibration_start": "2026-09-29T00:00:00Z",
+          "calibration_end_exclusive": "2026-10-06T00:00:00Z",
+          "test_start": "2026-10-06T00:00:00Z",
+          "test_end_exclusive": "2026-10-13T00:00:00Z"
+        },
+        "weekly_comparison": {
+          "previous_week_total": 568.4679,
+          "latest_week_total": 610.8187,
+          "coverage": 1.0
+        },
+        "enhanced_model": {
+          "status": "computed",
+          "method": "Histogram gradient boosting, fixed hyperparameters",
+          "protocol": "One-hour rolling origin; lag-24, lag-168 and trailing-24 mean use only past observations",
+          "features": [
+            "local hour",
+            "local weekday",
+            "lag 24h",
+            "lag 168h",
+            "trailing 24h mean"
+          ],
+          "fit_rows": 840,
+          "calibration_rows": 168,
+          "test_rows": 168,
+          "fit_end_exclusive": "2026-09-29T00:00:00Z",
+          "calibration_end_exclusive": "2026-10-06T00:00:00Z",
+          "metrics": {
+            "mae": 0.36285,
+            "rmse": 0.89084,
+            "interval_coverage": 0.82143,
+            "baseline_mae_same_rows": 0.38366,
+            "baseline_rmse_same_rows": 0.90216
+          },
+          "interval_radius": 0.2756,
+          "interval_method": "90th percentile absolute errors from separate prior calibration block",
+          "selection": "Comparison only; deployment retains seasonal naive pending validation-led model selection"
+        },
+        "limitations": [
+          "Intervals reflect synthetic historical errors and can miss regime changes",
+          "No percentage error metric is used near zero demand",
+          "Daily forecast periods are successive 24-hour windows from the forecast origin",
+          "Daily interval calibration uses complete calibration days only",
+          "Operational forecast remains seasonal naive; enhanced backtest does not silently switch the deployed method"
+        ]
+      }
+    },
+    "roads": {
+      "findings": 3,
+      "coverage": 1.0,
+      "evaluation": {
+        "status": "rule_based",
+        "method": "Deterministic analytical rules; verified with boundary and conservation tests",
+        "accuracy": null
+      },
+      "forecast": {
+        "status": "not_applicable",
+        "reason": "Domain uses an explicit rule or scenario model"
+      }
+    },
+    "drainage": {
+      "findings": 1,
+      "coverage": 1.0,
+      "evaluation": {
+        "status": "rule_based",
+        "method": "Deterministic analytical rules; verified with boundary and conservation tests",
+        "accuracy": null
+      },
+      "forecast": {
+        "status": "not_applicable",
+        "reason": "Domain uses an explicit rule or scenario model"
+      }
+    },
+    "waste": {
+      "findings": 3,
+      "coverage": 1.0,
+      "evaluation": {
+        "status": "rule_based",
+        "method": "Deterministic analytical rules; verified with boundary and conservation tests",
+        "accuracy": null
+      },
+      "forecast": {
+        "status": "not_applicable",
+        "reason": "Domain uses an explicit rule or scenario model"
+      }
+    },
+    "streetlights": {
+      "findings": 3,
+      "coverage": 0.97917,
+      "evaluation": {
+        "status": "rule_based",
+        "method": "Schedule and persistence boundary tests; no AI accuracy claim"
+      },
+      "forecast": {
+        "status": "not_applicable",
+        "reason": "Schedule comparison, no predictive demand model"
+      }
+    },
+    "general": {
+      "findings": 2,
+      "coverage": 1.0,
+      "evaluation": {
+        "status": "rule_based",
+        "method": "Deterministic analytical rules; verified with boundary and conservation tests",
+        "accuracy": null
+      },
+      "forecast": {
+        "status": "not_applicable",
+        "reason": "Domain uses an explicit rule or scenario model"
+      }
+    }
+  },
+  "limitation": "Single local run including independent-seed synthetic evaluation. No hardware-independent performance or real-world accuracy guarantee."
+}

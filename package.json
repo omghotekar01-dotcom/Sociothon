@@ -1,0 +1,18 @@
+{
+  "name": "civicsignal-360",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "scripts": {
+    "test:browser": "node scripts/browser-check.mjs",
+    "test:browser:evidence-assistant": "node scripts/evidence-assistant-check.mjs",
+    "test:timeline": "node --experimental-strip-types --test scripts/timeline.test.mjs",
+    "test:playback": "node --experimental-strip-types --test scripts/playback.test.mjs",
+    "test:case-explanation": "node --experimental-strip-types --test scripts/case-explanation.test.mjs",
+    "test:case-aging": "node --experimental-strip-types --test scripts/case-aging.test.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

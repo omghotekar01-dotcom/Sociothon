@@ -1,0 +1,212 @@
+{
+  "checked_at_utc": "2026-10-16T03:19:52.3350752Z",
+  "head_sha": "d81965e36fd1da62d0058eecec0ad8e6c63137b1",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/nikhiljadhav6869-sudo/Civic-Signal-360/actions/runs/38843626819",
+  "jobs": [
+    {
+      "id": 116789079471,
+      "name": "verify",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/nikhiljadhav6869-sudo/Civic-Signal-360/actions/runs/38843626819/job/116789079471",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pip install -r requirements.txt",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pytest tests -q",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm --dir apps/web install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node --experimental-strip-types --test scripts/*.test.mjs",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm --dir apps/web typecheck",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm --dir apps/web lint",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm --dir apps/web build",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Fresh data directory, migrations, worker and restart",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 116789079627,
+      "name": "docker-postgres",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/nikhiljadhav6869-sudo/Civic-Signal-360/actions/runs/38843626819/job/116789079627",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm install --frozen-lockfile",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run pnpm exec playwright install --with-deps chromium",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Clear checked-in local results before recording this runner",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build and start disposable PostgreSQL demo stack",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "All seven human review workflows and water operations",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Browser regression checks (sequential; shared test database)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve PostgreSQL evidence across application restart",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Container diagnostics",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Remove disposable CI containers and volumes",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

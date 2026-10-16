@@ -1,0 +1,33 @@
+{
+  "inputs": {
+    "source": "reservoir-main",
+    "target": "water-river",
+    "closed_edges": [],
+    "zone_id": "river"
+  },
+  "result": {
+    "source": "reservoir-main",
+    "target": "water-river",
+    "connected": true,
+    "path": [
+      "reservoir-main",
+      "tank-central",
+      "water-river"
+    ],
+    "path_edges": [
+      "pipe-01",
+      "pipe-02"
+    ],
+    "distance_m": 1070,
+    "reachable": [
+      "tank-central",
+      "water-river"
+    ],
+    "unreachable": [],
+    "closed_edges": [],
+    "hydraulic_result": "Hydraulic result unavailable",
+    "explanation": "Shortest directed path by configured pipe length; reachable nodes indicate topology only"
+  },
+  "provenance": "Synthetic topology",
+  "limitation": "Connectivity only; no hydraulic or customer impact inference"
+}

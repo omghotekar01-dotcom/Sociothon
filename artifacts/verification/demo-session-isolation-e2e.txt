@@ -1,0 +1,1 @@
+{"result":"passed","jobId":"718ca217-8790-4e08-95de-153efa43d58a","caseCount":1,"profilesIsolated":true,"roleSwitchKeepsSession":true,"resetClearedResult":true,"resetUiVerified":true}

@@ -1,0 +1,13 @@
+import {useEffect,useState} from 'react';
+import type {CivicCase} from './api';
+
+type Inspector = {id:string,name:string,domains:string[],zones:string[],electrical_qualified?:boolean};
+export function SupportingInspectors({item,inspectors,canEdit,busy,save}:{item:CivicCase,inspectors:Inspector[],canEdit:boolean,busy:boolean,save:(ids:string[],reason:string)=>void}) {
+  const [selected,setSelected]=useState<string[]>(item.secondary_assignees||[]);
+  const [reason,setReason]=useState('');
+  useEffect(()=>{setSelected(item.secondary_assignees||[]);setReason('')},[item.id,item.version]);
+  const eligible=inspectors.filter(i=>i.id!==item.assigned_to&&i.domains.includes(item.domain)&&i.zones.includes(item.zone_id)&&(item.domain!=='electricity'||i.electrical_qualified===true));
+  const editable=canEdit&&!!item.assigned_to&&!['resolved','closed'].includes(item.status);
+  const current=item.assignment_team?.supporting||[];
+  return <section className="supporting-inspectors" aria-label="Supporting inspector assignments"><h3>Supporting inspectors</h3><p className="helper">The lead remains accountable. Supporting inspectors can record field evidence within their domain and zone; operators review closure.</p><p>{current.length?current.map((i:any)=>i.name).join(', '):'No supporting inspectors assigned.'}</p>{canEdit&&<><fieldset disabled={!editable||busy}><legend>Supporting team (up to 10)</legend>{eligible.map(i=><label key={i.id} className="checkbox-label"><input type="checkbox" aria-label={'Supporting inspector: '+i.name} checked={selected.includes(i.id)} disabled={!selected.includes(i.id)&&selected.length>=10} onChange={e=>setSelected(e.target.checked?[...selected,i.id]:selected.filter(id=>id!==i.id))}/>{i.name}</label>)}{!eligible.length&&<p className="helper">No other active inspectors are eligible. Electricity cases require an administrator-recorded electrical qualification.</p>}{selected.filter(id=>!eligible.some(i=>i.id===id)).map(id=><label key={id} className="checkbox-label"><input type="checkbox" checked aria-label={'Remove unavailable supporting inspector '+id} onChange={()=>setSelected(selected.filter(value=>value!==id))}/>Previously assigned inspector ({id}); uncheck to remove</label>)}<label>Supporting assignment reason<textarea rows={3} value={reason} onChange={e=>setReason(e.target.value)} placeholder="Explain the supporting work or why access should be removed."/></label></fieldset>{!editable&&<p className="helper">Assign a lead to an open case before changing the supporting team.</p>}<button className="button secondary" disabled={!editable||busy||reason.trim().length<5} onClick={()=>save(selected,reason)}>Save supporting team</button></>}</section>;
+}

@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "name": "water chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    },
+    {
+      "name": "electricity chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    },
+    {
+      "name": "roads chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    },
+    {
+      "name": "drainage chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    },
+    {
+      "name": "waste chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    },
+    {
+      "name": "streetlights chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    },
+    {
+      "name": "general chart/export uses its own observations and the shared zone/window across reload",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

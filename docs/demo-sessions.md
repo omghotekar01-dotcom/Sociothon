@@ -1,0 +1,11 @@
+# Isolated local demo sessions
+
+In local demo mode, the server issues a separate HTTP-only `civic_demo_session` cookie. Its random token is hashed in the database. The cookie groups authenticated demo roles in one browser profile for up to eight hours, so signing out and choosing another demo role preserves the same demonstration. A separate browser profile receives a different group. The cookie is `SameSite=Strict`; the `Secure` attribute follows `COOKIE_SECURE`.
+
+Scenario jobs and the synthetic cases they publish carry the browser demo-session identifier. Case access, scenario job detail/playback/reset, and administrator job/audit lists enforce that identifier. The identifier is never returned in API responses. Citizen-submitted reports and uploaded readings remain governed by their existing account and staff permissions; demo-session reset does not remove them.
+
+In Scenario Studio, **Reset this demo session** clears stored results for that browser's scenario jobs, resets their playback cursors, and closes open synthetic scenario cases that have no report or human evidence. Queued and paused runs are stopped. A reset is refused while a calculation is running or pausing; pause or wait for it, then retry. Closed/resolved cases and cases with reports or evidence are preserved. The operation retains job tombstones, audit history, reports, uploads/readings, photographs/evidence, baseline data, and shared reference records. The API requires an authenticated all-zone operator or administrator, CSRF protection, and local demo mode.
+
+Migration `0007_demo_session_isolation` adds nullable session references to authentication sessions, scenario jobs, cases and audit events, plus the demo-session table. Older scenarios created before this migration have no browser-session provenance, so the migration does not guess which browser owns them. They remain legacy owner-scoped records and can still be reset one run at a time by their original owner; new scenarios are isolated.
+
+This is a local demonstration boundary, not a substitute for production tenant isolation or deployment security review. Non-demo configuration issues no demo-session cookie and rejects the session-reset route.

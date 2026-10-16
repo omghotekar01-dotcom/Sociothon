@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "name": "Offline editing persists notes and checklist; reconnect requires manual submission",
+      "status": "passed"
+    },
+    {
+      "name": "Server commit with lost response restores and retries without duplicate evidence or audit",
+      "status": "passed"
+    },
+    {
+      "name": "Concurrent case changes preserve the draft until explicit latest-version review",
+      "status": "passed"
+    },
+    {
+      "name": "Draft storage is separated by account on the same browser",
+      "status": "passed"
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "started_at": "2026-10-15T18:47:00.500Z",
+  "finished_at": "2026-10-15T18:47:07.513Z"
+}

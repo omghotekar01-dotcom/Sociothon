@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "name": "Offline photo selection stays in memory and reconnect never automatically uploads",
+      "status": "passed"
+    },
+    {
+      "name": "Dropped post-commit confirmation recovers after reload without image storage or a second POST",
+      "status": "passed"
+    },
+    {
+      "name": "Pre-commit failure restores reference, rejects a different file and retries the original once",
+      "status": "passed"
+    },
+    {
+      "name": "Changing reports discards in-memory selection and rejected images are not acknowledged",
+      "status": "passed"
+    },
+    {
+      "name": "Corrupt references are preserved until explicit clear; storage failure does not claim a saved copy",
+      "status": "passed"
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "started_at": "2026-10-15T18:51:23.218Z",
+  "finished_at": "2026-10-15T18:51:29.418Z"
+}

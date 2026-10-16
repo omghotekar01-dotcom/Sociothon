@@ -1,0 +1,17 @@
+{
+  "checks": [
+    {
+      "name": "Lost confirmation survives an opted-in reload and retries the exact attachment without duplicate evidence or decision changes",
+      "status": "passed"
+    },
+    {
+      "name": "Evidence Passport displays and exports the exact saved snapshot on desktop and mobile",
+      "status": "passed"
+    },
+    {
+      "name": "Changed configuration rejects a stale attachment and preserves historical saved evidence",
+      "status": "passed"
+    }
+  ],
+  "errors": []
+}

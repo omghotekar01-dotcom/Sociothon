@@ -1,0 +1,5 @@
+CivicSignal 360 full Python suite
+Run date: 2026-10-15
+Command: .venv\Scripts\python.exe -m pytest --basetemp=.runtime\pytest-full-ci-final -q tests
+Result: 140 passed, 4 warnings in 109.05 seconds.
+Environment note: On Windows, FastAPI TestClient requires local event-loop socketpair access; the full suite passed after the sandbox allowed that test-only local socket operation.

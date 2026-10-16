@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      CIVIC_DEMO_MODE: "true"
+      CIVIC_DATA_DIR: /app/data
+      DATABASE_URL: postgresql+psycopg://civic:civic-local@db:5432/civic
+    volumes:
+      - civic_evidence:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 90s
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: civic
+      POSTGRES_PASSWORD: civic-local
+      POSTGRES_DB: civic
+    volumes:
+      - civic_database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U civic -d civic"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+volumes:
+  civic_database:
+  civic_evidence:
