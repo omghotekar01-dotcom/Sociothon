@@ -17,6 +17,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .database import ROOT, get_db
 from .domain import case_access, visible_cases
+from .models import Audit, Evidence
 from .security import current_user, rate_limit
 
 router = APIRouter(prefix="/api/v1/ai", tags=["AI investigation"])
@@ -75,7 +76,7 @@ def require_ai_staff(user):
         raise HTTPException(403, "Assigned field staff, operators or administrators only.")
 
 
-def compact_context(case, related):
+def compact_context(case, related, record_counts=None):
     """Strict allowlist: deliberately excludes free-text, reports, photos and PII."""
     case_fields = ("domain", "zone_id", "severity", "status", "provenance", "asset_id")
     snapshot = {k: getattr(case, k, None) for k in case_fields}
@@ -86,6 +87,9 @@ def compact_context(case, related):
     if isinstance(priority, dict) and isinstance(priority.get("score"), (int, float)):
         snapshot["priority_score"] = priority["score"]
     references = {"case_metadata": "Selected case's coded metadata and workflow state"}
+    if record_counts is not None:
+        snapshot["verified_record_counts"] = record_counts
+        references["record_history"] = "Counts of preserved evidence types and recorded workflow actions; no text or personal identifiers"
     records = []
     for index, other in enumerate(related[:5], start=1):
         key = f"related_{index}"
@@ -170,7 +174,18 @@ def investigate(body: InvestigationBody, user=Depends(current_user), db=Depends(
     rate_limit("gemini:" + user.id, 6, 60)
     related = [row for row in visible_cases(db, user)
                if row.id != case.id and row.zone_id == case.zone_id]
-    context, catalog = compact_context(case, related)
+    # Database evidence is summarized by type and action, never by notes, file names or reporter identity.
+    evidence_kinds = [kind for (kind,) in db.query(Evidence.kind).filter(Evidence.case_id == case.id).limit(150).all()]
+    audit_actions = [action for (action,) in db.query(Audit.action).filter(Audit.case_id == case.id).limit(150).all()]
+    safe_kinds = {"inspection", "intervention", "follow_up", "photograph", "field_note", "water_review"}
+    safe_actions = {"transition", "assignment", "inspection", "intervention", "follow_up", "resolution", "reopen"}
+    record_counts = {
+        "evidence_total": len(evidence_kinds),
+        "evidence_kinds": {name: evidence_kinds.count(name) for name in sorted(safe_kinds) if name in evidence_kinds},
+        "workflow_events": len(audit_actions),
+        "event_types": {name: audit_actions.count(name) for name in sorted(safe_actions) if name in audit_actions},
+    }
+    context, catalog = compact_context(case, related, record_counts)
     data = {"focus": body.focus, "snapshot": context}
     provider_json = gemini_generate(data, key, selected_model())
     try:
