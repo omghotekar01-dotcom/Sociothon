@@ -23,6 +23,18 @@ def running_app(url):
         return False
 
 
+def running_frontend_matches_local_build(url):
+    """Prevent silently reusing a server that still serves another frontend build."""
+    index = ROOT / "apps/web" / "dist" / "index.html"
+    if not index.is_file():
+        return False
+    try:
+        with urllib.request.urlopen(url + "/", timeout=3) as response:
+            return response.read() == index.read_bytes()
+    except (urllib.error.URLError, OSError, ValueError):
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser(description="CivicSignal 360 local services")
     parser.add_argument("--host", default="127.0.0.1")
@@ -35,8 +47,17 @@ def main():
     os.chdir(ROOT)
     url = f"http://{args.host}:{args.port}"
     if args.open_browser and running_app(url):
-        print(f"CivicSignal 360 is already running: {url}", flush=True)
-        webbrowser.open(url)
+        if not running_frontend_matches_local_build(url):
+            print(
+                "Another CivicSignal 360 server is already running on port "
+                f"{args.port}, but it is serving a different or outdated frontend. "
+                "Stop the earlier CivicSignal batch/terminal with Ctrl+C, then launch again. "
+                "Do not kill unrelated processes.",
+                file=sys.stderr, flush=True,
+            )
+            return 1
+        print(f"CivicSignal 360 is already running with the current build: {url}/start", flush=True)
+        webbrowser.open(url + "/start")
         return 0
     if not (ROOT / "apps/web/dist/index.html").exists():
         print("Frontend build missing. Run: pnpm --dir apps/web build", file=sys.stderr)
@@ -69,7 +90,7 @@ def main():
         while all(process.poll() is None for process in children):
             if args.open_browser and not browser_opened and running_app(url):
                 browser_opened = True
-                webbrowser.open(url)
+                webbrowser.open(url + "/start")
             time.sleep(0.5)
         if not shutdown_requested:
             failed = next(process for process in children if process.poll() is not None)
