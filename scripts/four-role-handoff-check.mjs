@@ -97,7 +97,7 @@ try{
   const inspector=inspectorAccount=await account('inspector',email,password);
   await inspector.page.goto(base+'/inspector');
   await inspector.page.getByText(title,{exact:false}).first().waitFor();
-  await inspector.page.getByText(title,{exact:false}).first().click();
+  await inspector.page.getByRole('button',{name:'Open '+title}).click();
   const drawer=inspector.page.getByRole('dialog');await drawer.waitFor();
   await drawer.getByText(description).first().waitFor();
   assert.equal(await drawer.locator('.citizen-photo-grid img').count(),1);
@@ -126,7 +126,7 @@ try{
  await step('Inspector moves intervention to monitoring using the UI',async()=>{
   const inspector=inspectorAccount;
   await inspector.page.goto(base+'/inspector');
-  await inspector.page.getByText(title,{exact:false}).first().click();
+  await inspector.page.getByRole('button',{name:'Open '+title}).click();
   const drawer=inspector.page.getByRole('dialog');
   await drawer.getByRole('button',{name:'Take action',exact:true}).click();
   await drawer.getByLabel('Next state',{exact:true}).selectOption('monitoring');
