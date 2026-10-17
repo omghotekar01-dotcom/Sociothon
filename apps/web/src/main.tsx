@@ -7,6 +7,7 @@ import './sociothon-light.css';
 import './start-page.css';
 import './apple-finish.css';
 import './ai-investigator.css';
+import './staff-workflow.css';
 document.documentElement.dataset.theme = resolveTheme(readThemePreference());
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
 if('serviceWorker' in navigator&&location.protocol!=='file:')window.addEventListener('load',()=>{void navigator.serviceWorker.register('/sw.js').catch(()=>{});});
