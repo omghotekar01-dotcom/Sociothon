@@ -13,7 +13,7 @@ This repository contains real Python analytics, a durable relational API, a sepa
 
 ## Start locally
 
-**One-click Windows start (after initial setup):** double-click `START-CIVICSIGNAL.bat` in the project folder. It starts the API and worker and opens the preview once ready. Keep its terminal window open; press Ctrl+C to stop. If the application is already running on port 8000, it opens that instance instead of starting another copy. In VS Code's PowerShell terminal, use `./START-CIVICSIGNAL.bat`.
+**One-click Windows start (after initial setup):** double-click `START-CIVICSIGNAL.bat` in the project folder. It rebuilds the frontend, starts the API and worker, and opens the welcome page at `http://127.0.0.1:8000/start`. Keep its terminal window open; press Ctrl+C to stop. If an older build is already running on port 8000, the launcher asks you to stop that old process instead of showing an outdated page. In VS Code's PowerShell terminal, use `.\\START-CIVICSIGNAL.bat`.
 
 Prerequisites: Python 3.12 (pinned CI dependencies) or Python 3.14 (additional wheel-based install profile), Node.js 22 or newer, and pnpm 11.25.0. Python 3.14 runtime compatibility still requires a full regression pass. The first installation requires internet; runtime data, charts, map and authentication are local.
 

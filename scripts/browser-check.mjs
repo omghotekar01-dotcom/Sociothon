@@ -31,9 +31,10 @@ async function check(name, fn) {
 async function ready(){await page.locator('h1').first().waitFor({timeout:30000});await page.waitForTimeout(500);}
 await check('Landing works with external network denied', async()=>{
   await page.goto(base);await ready();
-  assert.match(await page.locator('h1').innerText(),/Small signals/i);
+  assert.match(await page.locator('h1').innerText(),/Notice an issue/i);
+  await page.getByRole('heading',{name:'Where would you like to start?'}).waitFor();
   await page.screenshot({path:path.join(artifact,'landing-1440.png'),fullPage:true});
-  await page.getByRole('button',{name:'Enter the observatory',exact:false}).click();
+  await page.locator('.welcome-action-grid').getByRole('button',{name:/Dashboard/}).click();
   await page.waitForURL('**/overview');await page.getByText('City pulse',{exact:false}).first().waitFor();
 });
 for(const width of [1440,768,390]) await check('Command centre viewport '+width,async()=>{

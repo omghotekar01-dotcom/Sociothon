@@ -11,7 +11,7 @@ const electricalIncidentLabels:Record<string,[string,string]>={power_outage:['Re
 export function ReportPage({data,notify,go,refresh,offlineOnly=false,onLanguageChange}:{data:Bootstrap;notify:(s:string)=>void;go:(p:string)=>void;refresh:()=>Promise<void>;offlineOnly?:boolean;onLanguageChange?:(language:'en'|'mr')=>void}) {
   const key='civic-draft-'+data.user.id;
   const {language:lang,setLanguage:setLang,mr,t}=useCitizenLanguage(data.user);
-  const [form,setForm]=useState<ReportForm>(()=>({domain:'water',zone_id:data.zones[0]?.id||'',title:'',description:'',location:'',idempotency_key:crypto.randomUUID(),incident_type:'other',affected_asset_id:''}));
+  const [form,setForm]=useState<ReportForm>(()=>({domain:(()=>{const id=new URLSearchParams(location.search).get('domain');return id&&domains.some(d=>d.id===id)?id:'water'})(),zone_id:data.zones[0]?.id||'',title:'',description:'',location:'',idempotency_key:crypto.randomUUID(),incident_type:'other',affected_asset_id:''}));
   const [step,setStep]=useState(0);
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState('');

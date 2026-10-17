@@ -14,7 +14,20 @@ if not exist ".venv\Scripts\python.exe" (
     pause
     exit /b 1
 )
-echo Starting the project. Your browser will open when ready.
+echo Building the latest welcome page and frontend...
+where pnpm >nul 2>&1
+if errorlevel 1 (
+    echo pnpm is missing. Install it with: npm install -g pnpm@11.25.0
+    pause
+    exit /b 1
+)
+call pnpm --dir apps/web build
+if errorlevel 1 (
+    echo Frontend build failed. Review the error above before starting the server.
+    pause
+    exit /b 1
+)
+echo Opening the Quick Start welcome page at http://127.0.0.1:8000/start
 echo First startup may take a little longer to prepare demo data.
 echo Keep this window open while using the project.
 echo Press Ctrl+C here to stop the server and worker.
