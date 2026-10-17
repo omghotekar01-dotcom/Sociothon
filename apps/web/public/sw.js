@@ -1,4 +1,4 @@
-const CACHE='civicsignal-shell-v1';
+const CACHE='civicsignal-shell-v2';
 const SHELL='/';
 
 self.addEventListener('install',event=>{
