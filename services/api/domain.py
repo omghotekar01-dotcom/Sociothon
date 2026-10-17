@@ -163,7 +163,15 @@ def full_case(db, case, user=None):
     for record in result["evidence_records"]:
         if record["kind"] == "photograph":
             record["url"] = f"/api/v1/evidence/{record['id']}/download"
-    reports = db.query(Report).filter_by(case_id=case.id).all()
+    reports = db.query(Report).filter_by(case_id=case.id).order_by(Report.created_at.desc()).all()
+    # Only returned after the existing case_access permission check. Preserve the
+    # submitted citizen content exactly; do not substitute the generic case summary.
+    result["citizen_reports"] = [{
+        "id": report.id, "receipt": "CS360-" + report.id[:8].upper(),
+        "title": report.title, "description": report.description,
+        "location": report.location, "domain": report.domain,
+        "zone_id": report.zone_id, "created_at": report.created_at
+    } for report in reports]
     reports_by_account = {}
     for report in reports:
         reports_by_account[report.user_id] = reports_by_account.get(report.user_id, 0) + 1
