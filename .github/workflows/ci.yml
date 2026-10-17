@@ -53,6 +53,8 @@ jobs:
         run: rm -f -- artifacts/verification/completion-browser.json artifacts/verification/browser-results.json artifacts/verification/water-review-evidence.json artifacts/verification/water-history.json artifacts/verification/domain-timeline.json
       - name: Build and start disposable PostgreSQL demo stack
         run: docker compose up --build --wait --wait-timeout 240
+      - name: Welcome guide, case entry, and mobile layout
+        run: node scripts/start-page-browser-check.mjs
       - name: All seven human review workflows and water operations
         run: node scripts/completion-browser-check.mjs
       - name: Water review evidence, lost confirmation retry and stale configuration
@@ -82,6 +84,10 @@ jobs:
           name: docker-browser-verification
           path: |
             artifacts/verification/completion-browser.json
+            artifacts/verification/start-page-browser.json
+            artifacts/verification/welcome-390.png
+            artifacts/verification/welcome-768.png
+            artifacts/verification/welcome-1440.png
             artifacts/verification/browser-results.json
             artifacts/verification/water-review-evidence.json
             artifacts/verification/water-history.json

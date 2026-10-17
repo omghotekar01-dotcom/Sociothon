@@ -80,7 +80,7 @@ export function StartPage({authenticated,role,onAction}:Props){
      <section className="welcome-services" aria-labelledby="welcome-services-title">
        <div><span className="welcome-services-kicker">Explore the city</span><h2 id="welcome-services-title">Start with a service</h2></div>
        <div className="welcome-service-list">
-         {domains.map(d=><button key={d.id} type="button" disabled={busy} onClick={()=>void open('/domains/'+d.id)}><d.icon size={18} color={d.color}/><span>{d.name}</span><ArrowRight size={14}/></button>)}
+         {domains.map(d=><button key={d.id} type="button" disabled={busy} onClick={()=>void open(role==='citizen'?'/report?domain='+d.id:'/domains/'+d.id)}><d.icon size={18} color={d.color}/><span>{d.name}</span><ArrowRight size={14}/></button>)}
        </div>
      </section>
    </main>
