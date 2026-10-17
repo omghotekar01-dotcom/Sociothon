@@ -295,7 +295,7 @@ await check('Supporting team assignment, field access and removal work in the in
     await page.getByLabel('Email address').fill(email);
     await page.getByLabel('Password',{exact:true}).fill('CivicDemo!2026');
     await page.locator('form').getByRole('button',{name:'Sign in',exact:true}).click();
-    await page.waitForURL('**/overview');await ready();
+    await page.waitForURL('**/start');await ready();
   }
   async function saveTeam(){
     const saved=page.waitForResponse(r=>r.url().endsWith('/supporting-inspectors')&&r.request().method()==='POST');
@@ -343,7 +343,7 @@ await check('Baseline candidate evaluation, administrator promotion and rollback
     await page.goto(base+'/settings');await ready();await page.getByRole('button',{name:'Sign out',exact:false}).click();
     await page.goto(base+'/login');await ready();await page.getByLabel('Email address').fill(email);
     await page.getByLabel('Password',{exact:true}).fill('CivicDemo!2026');
-    await page.locator('form').getByRole('button',{name:'Sign in',exact:true}).click();await page.waitForURL('**/overview');await ready();
+    await page.locator('form').getByRole('button',{name:'Sign in',exact:true}).click();await page.waitForURL('**/start');await ready();
   }
   await page.goto(base+'/lab');await ready();await page.getByRole('button',{name:'Baseline versions',exact:true}).click();
   await page.getByTestId('baseline-registry').waitFor();
@@ -421,7 +421,7 @@ await check('Marathi report submission, receipt download and tracking persist',a
   await page.getByLabel('Email address').fill('citizen@civicsignal.local');
   await page.getByLabel('Password',{exact:true}).fill('CivicDemo!2026');
   await page.locator('form').getByRole('button',{name:'Sign in',exact:true}).click();
-  await page.waitForURL('**/overview');
+  await page.waitForURL('**/start');
   await page.setViewportSize({width:390,height:844});
   await page.goto(base+'/report');await ready();
   await page.getByRole('button',{name:'Switch reporting language to Marathi',exact:true}).click();
