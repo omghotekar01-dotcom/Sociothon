@@ -237,3 +237,11 @@
 @media(max-width:700px){.si-layout{grid-template-columns:minmax(0,1fr)}.si-hero-actions{justify-content:flex-start}.theme-save-error{max-width:110px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media print{.theme-toggle,.theme-save-error{display:none!important}}
+
+/* Recorded-volume interpretation: an advisory band, never a closure decision. */
+.water-followup-status{padding:12px 15px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:inherit;min-width:0}
+.water-followup-status strong{display:block;font-size:12px}
+.water-followup-status p{font-size:11px;overflow-wrap:anywhere}
+.water-followup-status.observed_reduction{border-left:3px solid #2a946d}
+.water-followup-status.no_clear_change,.water-followup-status.insufficient{border-left:3px solid #ab8147}
+.water-followup-status.increased{border-left:3px solid #b65450}
