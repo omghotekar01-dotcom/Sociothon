@@ -15,9 +15,17 @@ This repository contains real Python analytics, a durable relational API, a sepa
 
 **One-click Windows start (after initial setup):** double-click `START-CIVICSIGNAL.bat` in the project folder. It starts the API and worker and opens the preview once ready. Keep its terminal window open; press Ctrl+C to stop. If the application is already running on port 8000, it opens that instance instead of starting another copy. In VS Code's PowerShell terminal, use `./START-CIVICSIGNAL.bat`.
 
-Prerequisites: Python 3.12, Node.js 22 or newer, and pnpm 11.25.0. The first installation requires internet; runtime data, charts, map and authentication are local.
+Prerequisites: Python 3.12 (pinned CI dependencies) or Python 3.14 (additional wheel-based install profile), Node.js 22 or newer, and pnpm 11.25.0. Python 3.14 runtime compatibility still requires a full regression pass. The first installation requires internet; runtime data, charts, map and authentication are local.
 
-PowerShell, from this repository:
+Windows setup (automatically selects requirements for your Python version, and builds the frontend):
+
+```powershell
+.\scripts\setup.ps1
+```
+
+To use Python 3.14 explicitly when multiple interpreters exist: `.\scripts\setup.ps1 -Python python` (provided `python --version` prints Python 3.14). If `.venv` belongs to a different Python version, remove that virtual environment first. Your `data/` folder and source files are not part of `.venv`.
+
+Manual Python 3.12 setup, from this repository:
 
 ```powershell
 python -m venv .venv
