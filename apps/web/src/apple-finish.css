@@ -1,0 +1,24 @@
+/* Apple-inspired web polish: restraint, optical hierarchy and instant tactile feedback.
+ * Original CSS, not a copy of any Swift/Objective-C library. */
+:root{font-family:system-ui,-apple-system,"Segoe UI","Nirmala UI",sans-serif;--radius:13px}
+button,input,select,textarea{font-family:inherit}
+:root[data-theme="light"]{--bg:#f5f7f9;--panel:#fff;--line:#e3e8ed;--muted:#5d6d79}
+:root[data-theme="light"] body,:root[data-theme="light"] .app{background:var(--bg)}
+:root[data-theme="light"] .sidebar,:root[data-theme="light"] .topbar{background:rgba(255,255,255,.93);border-color:#e3e8ed}
+@supports (backdrop-filter:blur(18px)){:root[data-theme="light"] .topbar{backdrop-filter:blur(18px) saturate(140%)}}
+:root[data-theme="light"] .panel{background:var(--panel);border-color:var(--line)}
+:root[data-theme="light"] .panel,:root[data-theme="light"] .welcome-guide{box-shadow:0 7px 26px rgba(25,45,65,.035)}
+:root[data-theme="light"] .page-heading h1{letter-spacing:-.045em;font-weight:730}
+:root[data-theme="light"] :is(input,select,textarea){border-radius:11px}
+:root[data-theme="light"] :is(button,.panel,.welcome-action){-webkit-tap-highlight-color:transparent}
+:root[data-theme="light"] .welcome-header{background:rgba(255,255,255,.94)}
+@supports (backdrop-filter:blur(16px)){:root[data-theme="light"] .welcome-header{backdrop-filter:blur(16px) saturate(140%)}}
+.welcome-action,.welcome-header-link,.ai-focus-group button,.welcome-service-list button{transition:transform .16s ease,background .18s ease,border-color .18s ease}
+.welcome-action:active:not(:disabled),.welcome-header-link:active:not(:disabled),.ai-focus-group button:active:not(:disabled),.welcome-service-list button:active:not(:disabled){transform:scale(.98)}
+:root[data-theme="light"] .welcome-action-primary,:root[data-theme="light"] .ai-generate{color:#fff}
+@media(hover:hover){.welcome-action:hover:not(:disabled){transform:translateY(-2px)}}
+:root[data-theme="light"] .welcome-intro h1{font-weight:730}
+:root[data-theme="light"] .welcome-guide-heading h2{font-weight:670}
+@media(prefers-reduced-motion:reduce){.welcome-action,.welcome-header-link,.ai-focus-group button,.welcome-service-list button{transition:none!important;transform:none!important}}
+@media(prefers-reduced-transparency:reduce){.topbar,.welcome-header{backdrop-filter:none!important;background:var(--panel)!important}}
+@media(prefers-contrast:more){.ai-panel,.ai-result-group,.welcome-action,.welcome-guide{border-width:2px}}

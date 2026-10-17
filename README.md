@@ -11,6 +11,10 @@ Local hackathon prototype for the user-supplied Sociathon 2026 PS7 water-managem
 
 This repository contains real Python analytics, a durable relational API, a separate job worker, and a React/TypeScript interface. Synthetic data is generated and processed; findings are not hardcoded success responses. See [STATUS.md](STATUS.md) for the current verified scope and unfinished requirements. No real utility systems are connected.
 
+## Optional Gemini AI Investigation Desk
+
+Staff can open **AI Investigation Desk** at `/ai` to generate evidence-grounded, read-only hypotheses and recommended checks. It requires an optional `GEMINI_API_KEY` configured **only** in your local `.env` file, never in GitHub or the browser. The existing offline Evidence Assistant works without Gemini. See [setup and privacy](docs/gemini-investigation.md).
+
 ## Start locally
 
 **One-click Windows start (after initial setup):** double-click `START-CIVICSIGNAL.bat` in the project folder. It rebuilds the frontend, starts the API and worker, and opens the welcome page at `http://127.0.0.1:8000/start`. Keep its terminal window open; press Ctrl+C to stop. If an older build is already running on port 8000, the launcher asks you to stop that old process instead of showing an outdated page. In VS Code's PowerShell terminal, use `.\\START-CIVICSIGNAL.bat`.

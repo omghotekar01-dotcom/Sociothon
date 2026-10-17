@@ -1,5 +1,5 @@
 import {useState, type FormEvent} from 'react';
-import {ArrowRight,BookOpen,LayoutDashboard,MessageCircle,Plus,Send,ShieldCheck,PlayCircle,ArrowUpRight} from 'lucide-react';
+import {ArrowRight,BookOpen,LayoutDashboard,MessageCircle,Plus,Send,Sparkles,ShieldCheck,PlayCircle,ArrowUpRight} from 'lucide-react';
 import {Brand,domains} from './components';
 import {ThemeSwitcher} from './ThemeSwitcher';
 import {guideRequest,type GuideResult} from './startGuide';
@@ -49,7 +49,7 @@ export function StartPage({authenticated,role,onAction}:Props){
          <h1 id="welcome-title">Notice an issue?<br/><span>Make it count.</span></h1>
          <p className="welcome-lead">Report local problems, follow what happens next, and explore how civic teams work with evidence.</p>
          <div className="welcome-action-grid" aria-label="Quick actions">
-           {actions.map(({title,description,path,icon:Icon,main})=><button type="button" className={'welcome-action'+(main?' welcome-action-primary':'')} key={path} disabled={busy} onClick={()=>void open(path)}>
+           {[...actions,...(authenticated&&role!=='citizen'?[{title:'AI Investigator',description:'Review a case with Gemini',path:'/ai',icon:Sparkles,main:false}]:[])].map(({title,description,path,icon:Icon,main})=><button type="button" className={'welcome-action'+(main?' welcome-action-primary':'')} key={path} disabled={busy} onClick={()=>void open(path)}>
              <span className="welcome-action-icon"><Icon size={21}/></span>
              <span className="welcome-action-label"><strong>{title}</strong><small>{description}</small></span>
              <ArrowRight size={18} className="welcome-action-arrow"/>

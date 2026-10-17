@@ -45,6 +45,8 @@ from .baselines import router as baseline_router
 app.include_router(baseline_router)
 from .water_operations import router as water_operations_router
 app.include_router(water_operations_router)
+from .ai_investigator import router as ai_investigator_router
+app.include_router(ai_investigator_router)
 
 
 @app.middleware("http")
