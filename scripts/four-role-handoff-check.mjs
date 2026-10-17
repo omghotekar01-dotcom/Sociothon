@@ -23,14 +23,14 @@ async function account(role,email,password){
 }
 async function step(name,run){
  try{await run();result.steps.push({name,status:'passed'});console.log('PASS',name)}
- catch(e){result.steps.push({name,status:'failed',error:e.message});result.errors.push(name+': '+e.message);console.error('FAIL',name,e.message)}
+ catch(e){result.steps.push({name,status:'failed',error:e.message});result.errors.push(name+': '+e.message);console.error('FAIL',name,e.message);throw e}
 }
 await fs.mkdir('artifacts/verification',{recursive:true});
 try{
  const admin=await account('admin');
  const operator=await account('operator');
  const citizen=await account('citizen');
- let inspectorId='',reportId='',caseId='';
+ let inspectorId='',reportId='',caseId='',inspectorAccount;
  const unique=String(Date.now());
  const email='ward-inspector-'+unique+'@example.test',password='DemoWardInspector-'+unique;
  const title='Four-role handoff '+unique,description='Synthetic citizen observation with a specific water issue and photographs.';
@@ -84,6 +84,9 @@ try{
   const review=operator.page.waitForResponse(r=>r.url().endsWith('/transition')&&r.request().method()==='POST');
   await drawer.getByRole('button',{name:'Record review decision'}).click();
   assert.equal((await review).status(),200);
+  // The saved transition is followed by two asynchronous UI refreshes.
+  // Wait until the form is ready instead of racing a stale in-flight action.
+  await operator.page.waitForFunction(()=>{const field=document.querySelector('#evidence-drawer textarea[placeholder="Explain the decision and the evidence you reviewed."]');return field&&!field.disabled&&field.value===''});
   await drawer.getByLabel('Reason / reviewed evidence').fill('Assign an authorized inspector for the same zone and department');
   await drawer.getByLabel('Lead inspector').selectOption(inspectorId);
   const response=operator.page.waitForResponse(r=>r.url().endsWith('/assign')&&r.request().method()==='POST');
@@ -91,10 +94,10 @@ try{
   assert.equal((await response).status(),200);
  });
  await step('New inspector signs in and sees assigned report and photo',async()=>{
-  const inspector=await account('inspector',email,password);
+  const inspector=inspectorAccount=await account('inspector',email,password);
   await inspector.page.goto(base+'/inspector');
   await inspector.page.getByText(title,{exact:false}).first().waitFor();
-  await inspector.page.getByText(title,{exact:false}).first().click();
+  await inspector.page.getByRole('button',{name:'Open '+title}).click();
   const drawer=inspector.page.getByRole('dialog');await drawer.waitFor();
   await drawer.getByText(description).first().waitFor();
   assert.equal(await drawer.locator('.citizen-photo-grid img').count(),1);
@@ -103,6 +106,68 @@ try{
    assert.equal(await inspector.page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2),false);
   }
   await inspector.page.screenshot({path:'artifacts/verification/four-role-inspector.png',fullPage:true});
+ });
+
+ await step('New inspector records an inspection and intervention',async()=>{
+  const inspector=inspectorAccount;
+  const before=await (await inspector.ctx.request.get(base+'/api/v1/cases/'+caseId)).json();
+  assert.equal(before.assigned_to,inspectorId);
+  const inspection=await inspector.post('/cases/'+caseId+'/inspection',{
+   notes:'Synthetic inspector assessment, not a verified infrastructure failure.',
+   version:before.version,checklist:{observed:true},observations:{},idempotency_key:crypto.randomUUID()
+  });
+  assert.ok(inspection.evidence_records.some(e=>e.kind==='inspection'&&e.actor_id===inspectorId));
+  const intervention=await inspector.post('/cases/'+caseId+'/intervention',{
+   notes:'Synthetic work recorded by the assigned inspector; follow-up is required.',
+   version:inspection.version,checklist:{observed:true,crew_documented:true},observations:{},idempotency_key:crypto.randomUUID()
+  });
+  assert.equal(intervention.status,'intervention');
+ });
+ await step('Inspector moves intervention to monitoring using the UI',async()=>{
+  const inspector=inspectorAccount;
+  await inspector.page.goto(base+'/inspector');
+  await inspector.page.getByRole('button',{name:'Open '+title}).click();
+  const drawer=inspector.page.getByRole('dialog');
+  await drawer.getByRole('button',{name:'Take action',exact:true}).click();
+  await drawer.getByLabel('Next state',{exact:true}).selectOption('monitoring');
+  await drawer.getByLabel('Reason / reviewed evidence').fill('Synthetic intervention needs a documented follow-up before closure.');
+  const [response]=await Promise.all([
+   inspector.page.waitForResponse(r=>r.url().endsWith('/transition')&&r.request().method()==='POST'),
+   drawer.getByRole('button',{name:'Record review decision'}).click()
+  ]);
+  assert.equal(response.status(),200,await response.text());
+  const result=await response.json();assert.equal(result.status,'monitoring');
+ });
+ await step('Follow-up evidence leads to operator closure and citizen tracking',async()=>{
+  const inspector=inspectorAccount;
+  const monitored=await (await inspector.ctx.request.get(base+'/api/v1/cases/'+caseId)).json();
+  const followed=await inspector.post('/cases/'+caseId+'/inspection',{
+   kind:'follow_up',notes:'Synthetic follow-up documents conditions after intervention.',
+   version:monitored.version,checklist:{follow_up_observed:true},observations:{},idempotency_key:crypto.randomUUID()
+  });
+  assert.ok(followed.evidence_records.some(e=>e.kind==='follow_up'&&e.actor_id===inspectorId));
+  const resolved=await operator.post('/cases/'+caseId+'/transition',{
+   status:'resolved',reason:'Human review of the inspector intervention and subsequent follow-up.',
+   version:followed.version
+  });
+  assert.equal(resolved.status,'resolved');
+  assert.equal((await(await citizen.ctx.request.get(base+'/api/v1/reports/'+reportId)).json()).status,'resolved');
+ });
+ await step('Another citizen cannot download the original private photograph',async()=>{
+  const stranger=await browser.newContext();contexts.push(stranger);
+  const created=await stranger.request.post(base+'/api/v1/auth/register',{data:{
+   name:'Unrelated resident',email:'other-'+unique+'@example.test',password:'DifferentCitizenPassword-'+unique
+  }});
+  assert.equal(created.status(),201,await created.text());
+  const outsiderCase=await stranger.request.get(base+'/api/v1/cases/'+caseId);
+  assert.equal(outsiderCase.status(),403);
+  const detail=await (await operator.ctx.request.get(base+'/api/v1/cases/'+caseId)).json();
+  const photo=detail.evidence_records.find(e=>e.kind==='photograph');
+  assert.ok(photo?.url);
+  const response=await stranger.request.get(base+photo.url);
+  assert.equal(response.status(),403);
+  const report=await stranger.request.get(base+'/api/v1/reports/'+reportId);
+  assert.equal(report.status(),403);
  });
 }finally{
  await fs.writeFile('artifacts/verification/four-role-handoff.json',JSON.stringify(result,null,2));
