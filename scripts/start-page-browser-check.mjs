@@ -15,7 +15,7 @@ const page=await context.newPage();page.on('pageerror',e=>result.errors.push(e.m
 try{
  await check('Public welcome has chat guide and four visible functional shortcuts',async()=>{
   await page.goto(base+'/');await page.getByRole('heading',{name:/Notice an issue/i}).waitFor();
-  for(const title of ['Add a case','My reports','Dashboard','Live demo'])assert.equal(await page.getByRole('button',{name:new RegExp(title,'i')}).count(),1);
+  for(const title of ['Add a case','My reports','Dashboard','Live demo'])assert.equal(await page.locator('.welcome-action-grid').getByRole('button',{name:new RegExp(title,'i')}).count(),1);
   await page.getByRole('button',{name:'Report a water leak',exact:true}).click();
   assert.match(await page.locator('.welcome-message-guide').last().innerText(),/Start a new report/);
   assert.equal(await page.locator('.welcome-result-link').count(),1);
