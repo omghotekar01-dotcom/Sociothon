@@ -57,7 +57,7 @@ try{
    location:'Synthetic public market entrance',idempotency_key:crypto.randomUUID()
   });
   caseId=saved.case_id;reportId=saved.id;
-  const image=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLytQAAAABJRU5ErkJggg==','base64');
+  const image=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAFklEQVR4nGN0q9jCwMDAxMDAwMDAAAARFAF2VoHk8QAAAABJRU5ErkJggg==','base64');
   const upload=await citizen.ctx.request.post(base+'/api/v1/cases/'+caseId+'/evidence',{
    headers:{'X-CSRF-Token':(await (await citizen.ctx.request.get(base+'/api/v1/auth/me')).json()).csrf_token},
    multipart:{file:{name:'demo.png',mimeType:'image/png',buffer:image},notes:'Synthetic citizen photo',idempotency_key:crypto.randomUUID()}
