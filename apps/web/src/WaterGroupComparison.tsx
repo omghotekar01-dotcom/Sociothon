@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {dateTimeLocalToIso, dateTimeLocalValue, download, fmt, getDisplayTimezoneLabel, send} from './api';
 import {useInterfaceLanguage} from './uiLanguage';
+import {classifyWaterFollowup} from './waterFollowup';
 
 type Config={version:number;inlet_ids:string[];outlet_ids:string[];consumption_ids:string[];boundary_confirmed:boolean};
 type Total={total_l:number|null;issues:string[]};
@@ -34,6 +35,11 @@ export function WaterGroupComparison({zone,configuration,assets,latestEnd,dirty}
       </fieldset>
       {result&&<div aria-live="polite" data-testid="water-group-comparison-result">
         <h3>{t('Recorded volume comparison','नोंदवलेल्या प्रमाणाची तुलना')}</h3>
+        {(()=>{const assessment=classifyWaterFollowup(result);return <div className={'water-followup-status '+assessment.category} role="status">
+          <strong>{assessment.category==='insufficient'?t('Insufficient evidence','अपुरी माहिती'):assessment.category==='observed_reduction'?t('Observed improvement in recorded volume','नोंदवलेल्या प्रमाणात घट'):assessment.category==='increased'?t('No observed improvement','नोंदवलेली सुधारणा नाही'):t('No clear change','स्पष्ट बदल नाही')}</strong>
+          <p>{assessment.reason}</p>
+        </div>})()}
+
         <p>{t('Before','पूर्वी')}: {volume(result.before_total_l)} · {t('After','नंतर')}: {volume(result.after_total_l)}</p>
         <p>{t('Observed reduction (negative means increase)','नोंदवलेली घट (ऋण म्हणजे वाढ)')}: <strong>{volume(result.observed_reduction_l)}</strong></p>
         <ul>{result.issues.map(issue=><li key={issue}>{issue}</li>)}</ul>
